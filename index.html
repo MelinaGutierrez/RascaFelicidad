@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RascaFelicidad</title>
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> -->
+    <link rel="icon" type="image/png" href="./logo2.png">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #2C787A;
+            /* Color de fondo */
+        }
+        #logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
+        nav ul li {
+            margin: 0 20px;
+        }
+        nav ul li a:hover {
+            color: #ffd700;
+        }
+        #slider-container {
+            overflow: hidden;
+            width: 100%;
+            max-height: 250px;
+            position: relative;
+            margin-left: 240px; /* Ancho de los filtros más margen */
+            width: calc(100% - 240px); /* Resta el ancho de los filtros */
+        }
+        #slider {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+        #contacto {
+            text-align: center;
+            padding: 50px 0;
+            /* Add vertical padding to center content */
+            background-color: #48C3C7;
+            /* Change to your desired background color */
+        }
+        #contacto h2 {
+            margin-bottom: 20px;
+        }
+        #contacto p {
+            margin-bottom: 40px;
+        }
+        #contacto a {
+            font-size: 18px;
+            /* Adjust font size as needed */
+            transition: font-size 0.3s, color 0.3s;
+        }
+        /* Hover style for the contacto link */
+        #contacto a:hover {
+            font-size: 20px;
+            /* Adjust font size for the hover state */
+            color: #FFD700;
+            /* Change to your desired hover color */
+        }
+        .slide {
+            flex: 0 0 100%;
+            max-height: 600px;
+            text-align: center;
+        }
+        .slide img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: cover;
+        }
+        #content {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 20px;
+        }
+        #products {
+            flex: 3;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+        ul li a {
+            color: white;
+            /* Color de enlaces */
+        }
+        .product {
+            padding: 10px;
+            background-color: #48C3C7;
+            /* Color de producto */
+        }
+        #filters {
+            position: fixed;
+            top: 70px;
+            left: 20px; /* Ajusta la posición izquierda según tu diseño */
+            width: 200px; /* Ajusta el ancho según tu diseño */
+            background-color: #333;
+            opacity: 0.8;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            color: white;
+            padding: 10px;
+
+        }
+        .filter-group {
+            margin-bottom: 10px;
+            /* Aumentar el espacio entre grupos de filtros */
+        }
+        .filter-label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 3px;
+        }
+        .filter-option {
+            display: flex;
+            /* Mostrar opciones en fila */
+            align-items: center;
+            /* Alinear verticalmente las casillas y etiquetas */
+        }
+        .filter-option input[type="checkbox"] {
+            margin-right: 3px;
+            /* Espacio entre casilla y etiqueta */
+        }
+        /* Estilos para los anuncios */
+        .anuncio {
+            width: 15%;
+            background-color: #59F2F7;
+            /* Color de anuncios */
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+        /* Estilos para el contenido principal */
+        #contenido {
+            width: 70%;
+            padding: 10px;
+        }
+        /* Add this to your existing <style> section */
+        /* Style for the buttons */
+        
+        /* Alineación de los anuncios */
+        #anuncio-izquierdo {
+            float: left;
+        }
+        #anuncio-derecho {
+            float: right;
+        }
+        #anuncios-derecha img {
+            display: block;
+            margin: 10px auto;
+            width: 10cm;
+            height: 7cm;
+            /* Center and add spacing between images */
+            max-width: 100%;
+            height: auto;
+            object-fit: cover;
+        }
+        #products {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: flex-start;
+        }
+        .product {
+            width: calc(25% - 20px);
+            margin-right: 20px;
+            margin-top: 20px;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease-in-out;
+        }
+        .product img {
+            height: auto;
+            width: 100%;
+        }
+        .product:hover {
+            transform: scale(1.05);
+        }
+        .product p {
+            color: white;
+        }
+        .product button {
+            background-color: #FFD700;
+            color: #fff;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .product button:hover {
+            background-color: #fff;
+            color: #FFD700;
+        }
+        .product:hover {
+            transform: scale(1.05);
+        }
+        @media (max-width: 768px) {
+
+            /* Hide the filters */
+            #filters {
+                display: none;
+            }
+
+            #filters img {
+                max-width: 100%;
+                height: auto;
+                object-fit: cover;
+                display: block;
+                /* Ensure images take up full width */
+            }
+            #filtros {
+                flex: 1;
+                min-width: 250px;
+                max-height: 80vh;
+                padding: 15px;
+                background-color: #333;
+                color: white;
+                border-radius: 10px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            }
+            .filter-group {
+                margin-bottom: 20px;
+            }
+            .filter-label {
+                font-weight: bold;
+                margin-bottom: 5px;
+            }
+            .filter-option {
+                display: flex;
+                align-items: center;
+            }
+            .filter-option input[type="checkbox"] {
+                margin-right: 5px;
+            }
+
+            /* Hide the right column */
+            #anuncios-derecha {
+                width: 15%;
+                position: sticky;
+                top: 70px;
+                padding: 10px;
+                background-color: #59F2F7;
+            }
+            #anuncios-derecha img {
+                display: block;
+                margin: 10px auto;
+                width: 100%;
+                height: auto;
+                object-fit: cover;
+            }
+            /* Adjust the layout for the products */
+            #products {
+                flex-direction: column;
+                align-items: center;
+            }
+            .product {
+                width: 80%;
+                margin-right: 0;
+            }
+        }
+        #contacto {
+            text-align: center;
+            padding: 50px 0;
+            background-color: #48C3C7;
+            /* Color de fondo de la sección de contacto */
+        }
+        #contacto h2 {
+            margin-bottom: 20px;
+        }
+        #contacto p {
+            margin-bottom: 40px;
+            color: white;
+        }
+        #contacto a {
+            font-size: 18px;
+            transition: font-size 0.3s, color 0.3s;
+            color: white;
+        }
+        #contacto a:hover {
+            font-size: 20px;
+            color: #FFD700;
+        }
+        /* Estilos para el pie de página */
+        #footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 20px 0;
+        }
+        
+        nav a {
+            font-size: 18px;
+            color: #fff;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        nav a:hover {
+            color: #FFD700;
+            font-size: 150%;
+            /* Change to your desired size */
+        }
+        /* Style for the RascaFelicidad logo */
+        .navbar-brand {
+            font-size: 24px;
+            font-weight: bold;
+            color: #fff;
+        }
+        /* Style for the section headers */
+        h2.section-header {
+            font-size: 28px;
+            color: #2C787A;
+            margin-bottom: 20px;
+        }
+        .logo {
+            width: 400px; /* Tamaño deseado para el logo */
+            height: auto;
+            margin-right: 5%; /* Espacio entre el logo y el menú */
+        }
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: #48C3C7;
+            padding: 10px;
+            z-index: 999;
+        }
+        nav .logo {
+            font-size: 5px;
+            font-weight: bold;
+            padding: 1px 0;
+            margin-left: 5%;
+        }
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        nav ul li {
+            margin: 0 20px;
+        }
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        nav ul li a:hover {
+            color: #FFD700;
+        }
+        body {
+            padding-top: 70px; /* Agrega espacio en la parte superior para evitar que el contenido esté detrás del menú */
+
+        }
+#productos {
+            margin-left: 240px; /* Ancho de los filtros más margen */
+        }
+        #scrollToTopButton {
+            display: none; /* Oculta el botón por defecto */
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #FFD700;
+            color: #ffffff;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+            z-index: 999; /* Asegura que el botón esté en la parte superior */
+        }
+        #scrollToTopButton:hover {
+            background-color: #ffffff;
+            color: #FFD700;
+        }
+        
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="container" style="display: flex; justify-content: space-between; align-items: center;">
+            <div>
+                <a href="#"><img src="logo3.png" alt="RascaFelicidad Logo" class="logo"></a>
+            </div>
+            <div>
+                <div id="navbarNav">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#inicio">Inicio</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#productos">Productos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#contacto">Contacto</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div id="filters" class="col-md-3"
+                style="flex: 1; min-width: 10px; padding: 10px; opacity: .8; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); color: white;">
+                <h2>Filtros</h2>
+                <div class="filter-group">
+                    <span class="filter-label">Marcas:</span>
+                    <label class="filter-option"><input type="checkbox">Marca 1</label>
+                    <label class="filter-option"><input type="checkbox">Marca 2</label>
+                    <!-- Agrega más marcas aquí -->
+                </div>
+                <div class="filter-group">
+                    <span class="filter-label">Productos en oferta:</span>
+                    <label class="filter-option"><input type="checkbox">Sí</label>
+                </div>
+                <div class="filter-group">
+                    <span class="filter-label">Precio:</span>
+                    <label class="filter-option"><input type="checkbox">Menor a $50</label>
+                    <label class="filter-option"><input type="checkbox">$50 - $100</label>
+                    <label class="filter-option"><input type="checkbox">Más de $100</label>
+                </div>
+                <div class="filter-group">
+                    <span class="filter-label">Vendido y enviado por:</span>
+                    <label class="filter-option"><input type="checkbox">Tienda 1</label>
+                    <label class="filter-option"><input type="checkbox">Tienda 2</label>
+                    <!-- Agrega más opciones de tiendas -->
+                </div>
+                <div class="filter-group">
+                    <span class="filter-label">Tipo:</span>
+                    <label class="filter-option"><input type="checkbox">Tipo 1</label>
+                    <label class="filter-option"><input type="checkbox">Tipo 2</label>
+                    <!-- Agrega más tipos -->
+                </div>
+                <div class="filter-group">
+                    <span class="filter-label">Altura:</span>
+                    <label class="filter-option"><input type="checkbox">Menos de 50 cm</label>
+                    <label class="filter-option"><input type="checkbox">50 - 100 cm</label>
+                    <label class="filter-option"><input type="checkbox">Más de 100 cm</label>
+                </div>
+                <div class="filter-group">
+                    <span class="filter-label">Color:</span>
+                    <label class="filter-option"><input type="checkbox">Blanco</label>
+                    <label class="filter-option"><input type="checkbox">Negro</label>
+                    <label class="filter-option"><input type="checkbox">Gris</label>
+                    <!-- Agrega más colores -->
+                    <br>
+                    <br>
+                    <img src="imagen1.jpg" alt="Imagen 1" class="slide-image"
+                        style="width: 100%; height: 300px; object-fit: cover;">
+                </div>
+            </div>
+    <div id="slider-container" class="container-fluid">
+        <div id="slider">
+            <div class="slide"> <img src="rascafelicidad.jpg" alt="Imagen 1" class="slide-image"
+                    style="width: 60%; height: 100%; object-fit: cover;"></div>
+            <div class="slide"> <a href="google.com"> <img src="rascador_1.jpeg" alt="Imagen 1" class="slide-image"
+                        style="width: 60%; height: auto; object-fit: cover;"></div></a>
+            <div class="slide"> <img src="imagen1.jpg" alt="Imagen 1" class="slide-image"
+                    style="width: 60%; height: auto; object-fit: cover;"></div>
+        </div>
+    </div>
+    <section id="productos">
+        <div id="content" class="container-fluid">
+            <div id="products" class="col-md-9"
+                style="display: flex; flex-wrap: wrap; align-items: flex-start; padding-left: 10px;">
+                <!-- Ejemplo de productos generados dinámicamente -->
+                <div class="product">
+                    <img src="./rascador_1.jpeg" alt="Producto 1">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla eget sem urna.</p>
+                    <button>Comprar</button>
+                </div>
+                <div class="product">
+                    <img src="./rascador_2.jpeg" alt="Producto 2">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla eget sem urna.</p>
+                    <button>Comprar</button>
+                </div>
+                <div class="product">
+                    <img src="./rascador_3.jpeg" alt="Producto 3">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla eget sem urna.</p>
+                    <button>Comprar</button>
+                </div>
+                <div class="product">
+                    <img src="./rascador_4.jpeg" alt="Producto 4">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla eget sem urna.</p>
+                    <button>Comprar</button>
+                </div>
+                <div class="product">
+                    <img src="./rascador_5.jpeg" alt="Producto 5">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla eget sem urna.</p>
+                    <button>Comprar</button>
+                </div>
+                <div class="product">
+                    <img src="./rascador_6.jpeg" alt="Producto 6">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla eget sem urna.</p>
+                    <button>Comprar</button>
+                </div>
+                <div class="product">
+                    <img src="./rascador_7.jpeg" alt="Producto 7">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla eget sem urna.</p>
+                    <button>Comprar</button>
+                </div>
+                <div class="product">
+                    <img src="./rascador_8.jpeg" alt="Producto 8">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla eget sem urna.</p>
+                    <button>Comprar</button>
+                </div>
+                <div class="product">
+                    <img src="./rascador_9.jpeg" alt="Producto 8">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla eget sem urna.</p>
+                    <button>Comprar</button>
+                </div>
+                <div class="product">
+                    <img src="./rascador_10.jpeg" alt="Producto 1">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla eget sem urna.</p>
+                    <button>Comprar</button>
+                </div>
+                <div class="product">
+                    <img src="./rascador_11.jpeg" alt="Producto 2">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla eget sem urna.</p>
+                    <button>Comprar</button>
+                </div>
+                <div class="product">
+                    <img src="./rascador_12.jpeg" alt="Producto 3">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla eget sem urna.</p>
+                    <button>Comprar</button>
+                </div>
+                <div class="product">
+                    <img src="./rascador_13.jpeg" alt="Producto 4">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla eget sem urna.</p>
+                    <button>Comprar</button>
+                </div>
+                <div class="product">
+                    <img src="./rascador_14.jpeg" alt="Producto 5">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla eget sem urna.</p>
+                    <button>Comprar</button>
+                </div>
+                <div class="product">
+                    <img src="./rascador_15.jpeg" alt="Producto 6">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla eget sem urna.</p>
+                    <button>Comprar</button>
+                </div>
+                <div class="product">
+                    <img src="./rascador_16.jpeg" alt="Producto 7">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla eget sem urna.</p>
+                    <button>Comprar</button>
+                </div>
+                <div class="product">
+                    <img src="./rascador_17.jpeg" alt="Producto 8">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla eget sem urna.</p>
+                    <button>Comprar</button>
+                </div>
+                <div class="product">
+                    <img src="./rascador_18.jpeg" alt="Producto 8">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla eget sem urna.</p>
+                    <button>Comprar</button>
+                </div>
+                <div class="product">
+                    <img src="./rascador_19.jpeg" alt="Producto 8">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla eget sem urna.</p>
+                    <button>Comprar</button>
+                </div>
+                <div class="product">
+                    <img src="./rascador_20.jpeg" alt="Producto 8">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla eget sem urna.</p>
+                    <button>Comprar</button>
+                </div>
+                <div class="product">
+                    <img src="./rascador_21.jpeg" alt="Producto 8">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla eget sem urna.</p>
+                    <button>Comprar</button>
+                </div>
+                <div class="product">
+                    <img src="./rascador_22.jpeg" alt="Producto 8">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla eget sem urna.</p>
+                    <button>Comprar</button>
+                </div>
+                <div class="product">
+                    <img src="./rascador_23.jpeg" alt="Producto 8">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla eget sem urna.</p>
+                    <button>Comprar</button>
+                </div>
+                <div class="product">
+                    <img src="./rascador_24.jpeg" alt="Producto 8">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla eget sem urna.</p>
+                    <button>Comprar</button>
+                </div>
+                <!-- Repite este patrón para más productos -->
+            </div>
+            <div id="anuncios-derecha" class="col-md-3">
+                <a href="https://luissebastian28.github.io/catStore/" target=_blank><img src="./ropaGatos.jpeg" alt="Anuncio 1" /></a>
+                <img src="./rascador_8.jpeg" alt="Anuncio 2">
+                <img src="./rascador_8.jpeg" alt="Anuncio 3">
+            </div>
+        </div>
+    </section>
+    <script>
+        const slider = document.getElementById("slider");
+        const slides = document.querySelectorAll(".slide");
+        let counter = 0;
+        const slideWidth = slides[0].clientWidth;
+
+        function moveSlider() {
+            counter++;
+            if (counter >= slides.length) {
+                counter = 0;
+            }
+            slider.style.transform = `translateX(-${counter * slideWidth}px)`;
+        }
+
+        setInterval(moveSlider, 5000);
+    </script>
+    <section id="contacto">
+        <h2>Contacto</h2>
+        <p>¿Quieres ponerte en contacto con nosotros? Utiliza el siguiente formulario para hacernos llegar tus
+            comentarios y preguntas.</p>
+        <a>RascaFelicidad</a>
+    </section>
+    <div id="footer" class="container-fluid bg-dark text-white text-center py-3">
+        © 2023 RascaFelicidad. Todos los derechos reservados.
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

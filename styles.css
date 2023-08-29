@@ -1,0 +1,155 @@
+/* Estilos generales */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #2C787A;
+}
+button {
+    background-color: #FFD700; /* Change this to your desired background color */
+    color: #ffffff; /* Text color */
+    border: none;
+    padding: 8px 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* Hover style for the buttons */
+button:hover {
+    background-color: #ffffff; /* Change this to your desired hover background color */
+    color: #FFD700; /* Hover text color */
+}
+#header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-image: url("baner2.jpeg");
+    color: white;
+}
+
+#logo {
+    font-size: 24px;
+}
+
+#slider-container {
+    overflow: hidden;
+    width: 100%;
+    max-height: 400px;
+    position: relative;
+}
+
+#slider {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
+
+.slide {
+    flex: 0 0 100%;
+    max-height: 600px;
+    text-align: center;
+}
+
+.slide img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+}
+
+#content {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 20px;
+}
+
+#products {
+    flex: 2; /* Cambiar a 2 columnas */
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Cambiar a 2 columnas */
+    gap: 10px;
+}
+
+ul li a {
+    color: white;
+}
+
+.product {
+    border: 1px solid #ccc;
+    padding: 10px;
+    background-color: #48C3C7;
+    transition: transform 0.3s ease-in-out; /* Agregar transición */
+}
+
+.product:hover {
+    transform: scale(1.05); /* Hacer el producto un poco más grande en el hover */
+}
+#products {
+    flex: 2; /* Cambiar a 2 columnas */
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Cambiar a 2 columnas */
+    gap: 10px;
+}
+
+#filters {
+    flex: 0.5;
+    min-width: 20px; /* Ajustar el ancho de los filtros */
+    max-height: 50vh;
+    padding: 15px;
+    background-image: url("fondofiltro.png");
+    opacity: .8;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    color: white;
+}
+
+.filter-group {
+    margin-bottom: 10px;
+}
+
+.filter-label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 3px;
+}
+
+.filter-option {
+    display: flex;
+    align-items: center;
+}
+
+.filter-option input[type="checkbox"] {
+    margin-right: 3px;
+}
+
+.anuncio {
+    width: 15%;
+    background-color: #59F2F7;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+#contenido {
+    width: 70%;
+    padding: 10px;
+}
+
+#anuncio-izquierdo {
+    float: left;
+}
+
+#anuncio-derecho {
+    float: right;
+}
+#filter-image {
+    max-height: 50vh;
+    padding: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#filter-image img {
+    max-width: 100%;
+    max-height: 100%;
+}
